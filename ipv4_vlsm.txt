@@ -1,0 +1,109 @@
+This is a dummy note for those who dont understand designing IP address(ipv4) scheme using VLSM.
+
+# Getting the CIDR from geometric sequence.
+
+Sequence is > 2^0 , 2^1 , 2^2 etc...
+We will get:
+
+1 2 4 8 16 32 64 128 256 512 etc..
+
+#getting the CIDR
+
+in binary we have 32 bits right? "ipv4". So basically just substract 32 from number of bits("n") which is the 2^n. 
+
+example:
+
+2^7 which is 128, 32-7 = /25 
+
+lets solve an example so we understand more!
+
+Given: {
+	IP address is 172.20.0.0/12
+	Subnet: LAN A
+	Number of hosts: 140
+}
+
+We need to find the following:
+```
+Network address
+
+Subnet mask (Decimal)
+
+CIDR Notation
+
+First IP host address
+
+Last IP host address
+
+Number of usable hosts in subnet
+
+Broadcast address
+
+```
+
+You need to always note that the first network address is reserverd for the network itself and the last is for the broadcast address. "0-255"
+
+example: 192.168.0.0 < network address
+192.168.0.255 < broadcast address
+```
+
+So the network address is: 172.20.0.0
+
+For getting the subnetmask in decimal we need first to know the CIDR. 
+Since we have 140 hosts we need to find a number that will be greater than or equal to 140.
+
+Using this formula: 2^n - 2 >= 140.
+
+is 2^0 to 2^7 greater than or equal to 140? NO
+But is 2^8 greater than or equal to 140? yes 256.
+
+# The number of bits that we need is the power of 8, so what we will do:
+substract number of bits 32 by 8 which will be 24 and thats our CIDR.
+
+32-8 = /24
+
+
+now how to get the subnet mask in decimal?
+Simply the number that we got which is 24 will be used in our 32 bits. 
+
+to make it more simple, this 32 binary bits we will break it into 8-bit segments, 4.4.4.4:
+
+imagine a light that has a switch that turns it off and on, ON indicates that the light is open which will be refered as 1 and OFF which is closed will be 0. 
+
+our number is 24, imagining we want to turn on only the first 24 lights out of 32. which will be:
+11111111.11111111.11111111.00000000 
+
+128+64+32+16+8+4+2+1=255, adding these 8 bits together will give us 255.
+
+so our answer is:
+255.255.255.0 
+
+```
+
+Number of usable hosts in subnet?
+This is pretty simple , the first and last host is reserved so .0 and .255 is excluded,
+we will be left with .1 to .254 , .1 is the first IP host and .254 is the last.
+
+Broadcast address: .255
+
+
+so answers are:
+Network address 172.20.0.0
+
+Subnet mask (Decimal) 255.255.255.0
+
+CIDR Notation /24
+
+First IP host address 172.20.0.1
+
+Last IP host address 172.20.0.254
+
+Number of usable hosts in subnet: 254
+
+Broadcast address: 255
+
+
+
+
+
+
